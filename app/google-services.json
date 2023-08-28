@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "794211080951",
+    "project_id": "campus-connect-c4aca",
+    "storage_bucket": "campus-connect-c4aca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:794211080951:android:4a88e3dd108ce4465111f2",
+        "android_client_info": {
+          "package_name": "com.teamtechnojam.campusconnect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "794211080951-cghsg37j1tkvvjm5dk0f26fv07pg00t0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzjFaug0qPueV-Q48AcUt8FjzK_MotrMc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "794211080951-cghsg37j1tkvvjm5dk0f26fv07pg00t0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

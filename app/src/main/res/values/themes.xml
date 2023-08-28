@@ -1,0 +1,13 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.CampusConnect" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.CampusConnect" parent="Base.Theme.CampusConnect" />
+
+    <style name="MyCustomTheme" parent="Base.Theme.CampusConnect">
+        <item name="android:statusBarColor">@color/transparent</item>
+    </style>
+</resources>

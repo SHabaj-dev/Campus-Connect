@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Campus Connect</string>
+    <string name="title">Title</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore </string>
+    <string name="let_s_go">Let\'s Go</string>
+    <string name="login">Login</string>
+    <string name="user_name">User Name</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="don_t_have_account">Don\'t have account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="already_have_a_account">Already have a account?</string>
+    <string name="_91">+91</string>
+    <string name="or">Or</string>
+    <string name="login_with_google">Login with Google</string>
+    <string name="sign_up_with_google">Sign Up with Google</string>
+    <string name="next">Next</string>
+    <string name="verification_code_has_been_sent_on">Verification Code has been sent on</string>
+    <string name="_91123456789">+91123456789</string>
+    <string name="didn_t_recived_otp">Didn\'t received Otp?</string>
+    <string name="re_send">re-Send</string>
+    <string name="verify">Verify</string>
+</resources>
