@@ -3,6 +3,7 @@ package com.teamtechnojam.campusconnect.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseApp
@@ -12,6 +13,8 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.teamtechnojam.campusconnect.databinding.ActivitySignUpBinding
 import java.util.concurrent.TimeUnit
@@ -24,6 +27,8 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
     private var verificationId: String? = null
 
+    //    private lateinit var dialog: Dialog
+    private final val TAG = "SIGN_UP_ACTIVITY"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +36,7 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
         FirebaseApp.initializeApp(this)
         firebaseAuth = Firebase.auth
+
 
         if (savedInstanceState != null) {
             userName = savedInstanceState.getString("userName").toString()
@@ -47,6 +53,8 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         binding.btnNext.setOnClickListener {
+            binding.pbLoading.visibility = View.VISIBLE
+            binding.btnNext.visibility = View.GONE
             userName = binding.etUserName.text.toString()
             countryCode = binding.etCountryCode.text.toString()
             phoneNumber = binding.etPhoneNumber.text.toString()
@@ -55,6 +63,8 @@ class SignUpActivity : AppCompatActivity() {
 
             if (userName.isEmpty()) {
                 showToastMessage("User Name can't be empty")
+                binding.pbLoading.visibility = View.GONE
+                binding.btnNext.visibility = View.VISIBLE
             } else if (phoneNumber.isEmpty() || phoneNumber.length != 10) {
                 showToastMessage("Please check phone number!!")
             } else if (newPassword.isEmpty()) {
@@ -80,6 +90,9 @@ class SignUpActivity : AppCompatActivity() {
     private fun showToastMessage(message: String) {
         Toast.makeText(this@SignUpActivity, message, Toast.LENGTH_SHORT).show()
         Log.d("SIGNUP_ACTIVITY", "showToastMessage: $message")
+//        dialog.dismiss()
+        binding.pbLoading.visibility = View.GONE
+        binding.btnNext.visibility = View.VISIBLE
     }
 
     private fun startPhoneNumberVerification(phoneNumber: String) {
@@ -89,20 +102,24 @@ class SignUpActivity : AppCompatActivity() {
             .setActivity(this)
             .setCallbacks(object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                 override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                    // This callback is triggered if the verification is done automatically
-                    // You can sign in the user here if required
                 }
 
                 override fun onVerificationFailed(e: FirebaseException) {
                     showToastMessage("Verification failed: ${e.message}")
+                    Log.d(TAG, "onVerificationFailed: ${e.message}")
                 }
 
                 override fun onCodeSent(
                     verificationId: String,
                     token: PhoneAuthProvider.ForceResendingToken
                 ) {
-                    // Store the verification ID and move to VerifyOtpActivity
                     this@SignUpActivity.verificationId = verificationId
+                    saveUserDetailsToDatabase(
+                        firebaseAuth.currentUser.toString(),
+                        userName,
+                        phoneNumber,
+                        binding.etNewPassword.text.toString()
+                    )
                     startActivity(
                         Intent(this@SignUpActivity, VerifyOtpActivity::class.java)
                             .putExtra("verificationId", verificationId)
@@ -114,5 +131,37 @@ class SignUpActivity : AppCompatActivity() {
 
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
+
+    private fun saveUserDetailsToDatabase(
+        userId: String,
+        userName: String,
+        phoneNumber: String,
+        password: String
+    ) {
+        val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+        val usersRef: DatabaseReference = database.reference.child("users")
+
+        val userMap = hashMapOf<String, Any>(
+            "userId" to userId,
+            "userName" to userName,
+            "password" to password,
+            "phoneNumber" to phoneNumber
+        )
+
+        usersRef.child(userId).setValue(userMap)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+//                    showToastMessage("User details saved to the database")
+                    Log.d(TAG, "saveUserDetailsToDatabase: Success")
+                } else {
+//                    showToastMessage("Failed to save user details to the database")
+                    Log.d(TAG, "saveUserDetailsToDatabase: Failed")
+                    // Handle the error
+                }
+                binding.pbLoading.visibility = View.GONE
+                binding.btnNext.visibility = View.VISIBLE
+            }
+    }
+
 
 }

@@ -60,7 +60,7 @@
         android:textStyle="bold"
         app:cursorWidth="2dp"
         app:hideLineWhenFilled="true"
-        app:itemCount="4"
+        app:itemCount="6"
         app:itemHeight="48dp"
         app:itemRadius="4dp"
         app:itemSpacing="@dimen/_15dp"
@@ -81,7 +81,7 @@
         android:textColor="@color/gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/firstPinView" />
+        app:layout_constraintTop_toBottomOf="@+id/pv_otp" />
 
     <TextView
         android:id="@+id/tv_resend"
@@ -91,6 +91,7 @@
         android:text="@string/re_send"
         android:textColor="@color/blue"
         android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -100,7 +101,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_15dp"
-        android:text="00:00"
+        android:text="@string/_00_00"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_resend" />

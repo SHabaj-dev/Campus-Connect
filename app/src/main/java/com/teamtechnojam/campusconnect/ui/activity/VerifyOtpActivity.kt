@@ -108,7 +108,7 @@ class VerifyOtpActivity : AppCompatActivity() {
     private fun updateResendTimerUI() {
         if (isResendEnabled) {
             binding.tvResend.isEnabled = true
-            binding.tvTimer.text = "Resend?"
+//            binding.tvTimer.text = "Resend?"
         } else {
             binding.tvResend.isEnabled = false
             val minutes = TimeUnit.MILLISECONDS.toMinutes(timeLeftMillis)
@@ -123,7 +123,7 @@ class VerifyOtpActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     showToastMessage("Phone number sign-up successful!")
                     startActivity(Intent(this, MainActivity::class.java))
-                    finish()
+                    finishAffinity()
                 } else {
                     showToastMessage("Phone number sign-up failed: ${task.exception?.message}")
                 }

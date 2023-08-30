@@ -27,4 +27,5 @@
     <string name="didn_t_recived_otp">Didn\'t received Otp?</string>
     <string name="re_send">re-Send</string>
     <string name="verify">Verify</string>
+    <string name="_00_00">00:00</string>
 </resources>
