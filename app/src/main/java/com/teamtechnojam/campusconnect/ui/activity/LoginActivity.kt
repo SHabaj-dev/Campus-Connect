@@ -8,8 +8,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -19,9 +21,11 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.teamtechnojam.campusconnect.R
 import com.teamtechnojam.campusconnect.databinding.ActivityLoginBinding
+import java.util.concurrent.TimeUnit
 
 class LoginActivity : AppCompatActivity() {
 
+    private var verificationId: String? = null
     private lateinit var binding: ActivityLoginBinding
     private lateinit var dialog: Dialog
     private final val TAG = "LOGIN_ACTIVITY"
@@ -68,9 +72,13 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.btnSignUpWithGoogle.setOnClickListener {
-
+            loginWithGoogle()
         }
 
+    }
+
+    private fun loginWithGoogle() {
+        //yet to implement
     }
 
     private fun checkAuthentication(userName: String, userPassword: String) {
@@ -86,13 +94,30 @@ class LoginActivity : AppCompatActivity() {
                                 .child(userId)
                                 .child("phoneNumber")
                                 .getValue(String::class.java)
-                            Log.d(TAG, "onDataChange: $storedPhoneNumber")
 
-                            val credentials = PhoneAuthProvider.getCredential(
-                                storedPhoneNumber.toString(),
-                                userPassword
-                            )
-                            signInWithPhoneCredentials(credentials)
+
+                            val storedPassword = dataSnapshot
+                                .child(userId)
+                                .child("password")
+                                .getValue(String::class.java)
+
+                            Log.d(TAG, "onDataChange: $storedPhoneNumber $storedPassword")
+
+                            if (userName == binding.etUserName.text.toString() &&
+                                storedPassword == binding.etUserPassword.text.toString()
+                            ) {
+                                if (storedPhoneNumber != null) {
+                                    startPhoneNumberVerification(storedPhoneNumber)
+                                }
+                            } else {
+                                showToastMessage("Please check your Login Details.")
+                            }
+
+//                            val credentials = PhoneAuthProvider.getCredential(
+//                                storedPhoneNumber.toString(),
+//                                userPassword
+//                            )
+//                            signInWithPhoneCredentials(credentials)
                         }
                     } else {
                         showToastMessage("User not found.")
@@ -105,7 +130,40 @@ class LoginActivity : AppCompatActivity() {
             })
     }
 
-    private fun signInWithPhoneCredentials(credentials: PhoneAuthCredential) {
+    private fun startPhoneNumberVerification(phoneNumber: String) {
+        val options = PhoneAuthOptions.newBuilder(firebaseAuth)
+            .setPhoneNumber(phoneNumber)
+            .setTimeout(60L, TimeUnit.SECONDS)
+            .setActivity(this)
+            .setCallbacks(object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+                }
+
+                override fun onVerificationFailed(e: FirebaseException) {
+                    showToastMessage("Verification failed: ${e.message}")
+                    Log.d(TAG, "onVerificationFailed: ${e.message}")
+                }
+
+                override fun onCodeSent(
+                    verificationId: String,
+                    token: PhoneAuthProvider.ForceResendingToken
+                ) {
+                    this@LoginActivity.verificationId = verificationId
+                    startActivity(
+                        Intent(this@LoginActivity, VerifyOtpActivity::class.java)
+                            .putExtra("verificationId", verificationId)
+                            .putExtra("phoneNumber", phoneNumber)
+                    )
+                    dialog.dismiss()
+                }
+            })
+            .build()
+
+        PhoneAuthProvider.verifyPhoneNumber(options)
+    }
+
+
+    /*private fun signInWithPhoneCredentials(credentials: PhoneAuthCredential) {
         firebaseAuth.signInWithCredential(credentials)
             .addOnCompleteListener(this@LoginActivity) { task ->
                 if (task.isSuccessful) {
@@ -123,7 +181,7 @@ class LoginActivity : AppCompatActivity() {
                 }
 
             }
-    }
+    }*/
 
 
     private fun showToastMessage(message: String) {

@@ -68,4 +68,8 @@ dependencies {
 
     //PIN VIEW
     implementation 'io.github.chaosleung:pinview:1.4.4'
+
+    //Google play Auth
+    implementation 'com.google.android.gms:play-services-auth:20.6.0'
+
 }

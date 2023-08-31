@@ -115,7 +115,7 @@ class SignUpActivity : AppCompatActivity() {
                 ) {
                     this@SignUpActivity.verificationId = verificationId
                     saveUserDetailsToDatabase(
-                        firebaseAuth.currentUser.toString(),
+                        firebaseAuth.uid.toString(),
                         userName,
                         phoneNumber,
                         binding.etNewPassword.text.toString()
@@ -148,7 +148,7 @@ class SignUpActivity : AppCompatActivity() {
             "phoneNumber" to phoneNumber
         )
 
-        usersRef.child(userId).setValue(userMap)
+        usersRef.child(userName).setValue(userMap)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
 //                    showToastMessage("User details saved to the database")
