@@ -8,20 +8,19 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.FirebaseException
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthOptions
-import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.teamtechnojam.campusconnect.R
 import com.teamtechnojam.campusconnect.databinding.ActivityLoginBinding
-import java.util.concurrent.TimeUnit
 
 class LoginActivity : AppCompatActivity() {
 
@@ -30,6 +29,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var dialog: Dialog
     private final val TAG = "LOGIN_ACTIVITY"
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInClient
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,147 +43,72 @@ class LoginActivity : AppCompatActivity() {
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCancelable(false)
 
-        binding.tvSignUp.setOnClickListener {
-            startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
-        }
-
-        binding.tvForgotPassword.setOnClickListener {
-            startActivity(Intent(this@LoginActivity, ForgotPasswordActivity::class.java))
-        }
-
-        binding.btnLogin.setOnClickListener {
+        binding.flSignUpWithGoogle.setOnClickListener {
             dialog.show()
-            val userName = binding.etUserName.text.toString()
-            val userPassword = binding.etUserPassword.text.toString()
-
-            if (userName.isEmpty()) {
-                binding.tilUserName.boxStrokeColor = resources.getColor(R.color.red)
-                Toast.makeText(this@LoginActivity, "Please Enter User Name.", Toast.LENGTH_SHORT)
-                    .show()
-                dialog.dismiss()
-            } else if (userPassword.isEmpty()) {
-                binding.tilUserPassword.boxStrokeColor = resources.getColor(R.color.red)
-                Toast.makeText(this@LoginActivity, "Please Enter your password", Toast.LENGTH_SHORT)
-                    .show()
-                dialog.dismiss()
-            } else {
-                checkAuthentication(userName, userPassword)
-            }
-
-        }
-
-        binding.btnSignUpWithGoogle.setOnClickListener {
-            loginWithGoogle()
+            loginUsingGoogle()
         }
 
     }
 
-    private fun loginWithGoogle() {
-        //yet to implement
-    }
-
-    private fun checkAuthentication(userName: String, userPassword: String) {
-        val userReference = FirebaseDatabase.getInstance().getReference("users")
-
-        userReference.orderByChild("userName").equalTo(userName)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        val userId = dataSnapshot.children.first().key
-                        if (userId != null) {
-                            val storedPhoneNumber = dataSnapshot
-                                .child(userId)
-                                .child("phoneNumber")
-                                .getValue(String::class.java)
-
-
-                            val storedPassword = dataSnapshot
-                                .child(userId)
-                                .child("password")
-                                .getValue(String::class.java)
-
-                            Log.d(TAG, "onDataChange: $storedPhoneNumber $storedPassword")
-
-                            if (userName == binding.etUserName.text.toString() &&
-                                storedPassword == binding.etUserPassword.text.toString()
-                            ) {
-                                if (storedPhoneNumber != null) {
-                                    startPhoneNumberVerification(storedPhoneNumber)
-                                }
-                            } else {
-                                showToastMessage("Please check your Login Details.")
-                            }
-
-//                            val credentials = PhoneAuthProvider.getCredential(
-//                                storedPhoneNumber.toString(),
-//                                userPassword
-//                            )
-//                            signInWithPhoneCredentials(credentials)
-                        }
-                    } else {
-                        showToastMessage("User not found.")
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Log.d(TAG, "onCancelled: ${error.message}")
-                }
-            })
-    }
-
-    private fun startPhoneNumberVerification(phoneNumber: String) {
-        val options = PhoneAuthOptions.newBuilder(firebaseAuth)
-            .setPhoneNumber(phoneNumber)
-            .setTimeout(60L, TimeUnit.SECONDS)
-            .setActivity(this)
-            .setCallbacks(object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-                override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                }
-
-                override fun onVerificationFailed(e: FirebaseException) {
-                    showToastMessage("Verification failed: ${e.message}")
-                    Log.d(TAG, "onVerificationFailed: ${e.message}")
-                }
-
-                override fun onCodeSent(
-                    verificationId: String,
-                    token: PhoneAuthProvider.ForceResendingToken
-                ) {
-                    this@LoginActivity.verificationId = verificationId
-                    startActivity(
-                        Intent(this@LoginActivity, VerifyOtpActivity::class.java)
-                            .putExtra("verificationId", verificationId)
-                            .putExtra("phoneNumber", phoneNumber)
-                    )
-                    dialog.dismiss()
-                }
-            })
+    private fun loginUsingGoogle() {
+        val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(this@LoginActivity.getString(R.string.default_sign_in_client_id))
+            .requestEmail()
             .build()
 
-        PhoneAuthProvider.verifyPhoneNumber(options)
+        googleSignInClient = GoogleSignIn.getClient(this@LoginActivity, googleSignInOptions)
+
+        val intent: Intent = googleSignInClient.signInIntent
+        startActivityForResult(intent, 100)
+
     }
 
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
-    /*private fun signInWithPhoneCredentials(credentials: PhoneAuthCredential) {
-        firebaseAuth.signInWithCredential(credentials)
-            .addOnCompleteListener(this@LoginActivity) { task ->
-                if (task.isSuccessful) {
-                    startActivity(
-                        Intent(
-                            this@LoginActivity,
-                            MainActivity::class.java
+        if (requestCode == 100) {
+            val signInAccountTask: Task<GoogleSignInAccount> =
+                GoogleSignIn.getSignedInAccountFromIntent(data)
+            if (signInAccountTask.isSuccessful) {
+                val s = "Google sign in successful"
+                showToastMessage(s)
+                try {
+                    val googleSignInAccount = signInAccountTask.getResult(ApiException::class.java)
+
+                    if (googleSignInAccount != null) {
+
+                        val authCredential: AuthCredential = GoogleAuthProvider.getCredential(
+                            googleSignInAccount.idToken, null
                         )
-                    )
-                    finishAffinity()
-                } else {
 
-                    showToastMessage("Login failed due to: ${task.exception?.message}")
-                    Log.d(TAG, "onDataChange: ${task.exception?.message}")
+                        firebaseAuth.signInWithCredential(authCredential)
+                            .addOnCompleteListener(this) { task ->
+
+                                if (task.isSuccessful) {
+                                    startActivity(
+                                        Intent(
+                                            this@LoginActivity,
+                                            MainActivity::class.java
+                                        ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                    )
+                                    dialog.dismiss()
+                                    finish()
+                                    Log.d("FIREBASE_LOGIN", "Firebase authentication successful")
+                                } else {
+                                    Log.d(
+                                        "FIREBASE_LOGIN",
+                                        "Authentication Failed :" + task.exception?.message
+                                    )
+                                }
+                            }
+                    }
+                } catch (e: ApiException) {
+                    e.printStackTrace()
                 }
-
             }
-    }*/
-
+        }
+    }
 
     private fun showToastMessage(message: String) {
         Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()

@@ -10,4 +10,9 @@
     <style name="MyCustomTheme" parent="Base.Theme.CampusConnect">
         <item name="android:statusBarColor">@color/transparent</item>
     </style>
+
+    <style name="CircleImageShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

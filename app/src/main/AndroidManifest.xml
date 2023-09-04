@@ -12,24 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/MyCustomTheme"
         tools:targetApi="31">
-        <activity
-            android:name=".ui.activity.VerifyOtpActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activity.ForgotPasswordActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activity.SignUpActivity"
-            android:exported="false" />
+
         <activity
             android:name=".ui.activity.MainActivity"
             android:exported="false"
             android:label="@string/title_activity_main" />
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activity.IntroActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.SplashActivity"

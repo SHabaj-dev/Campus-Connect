@@ -6,4 +6,5 @@
     <color name="transparent">#00329BFC</color>
     <color name="gray">#474747</color>
     <color name="red">#F44336</color>
+    <color name="google_red">#F23C0F</color>
 </resources>

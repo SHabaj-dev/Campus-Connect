@@ -31,4 +31,5 @@ class SplashActivity : AppCompatActivity() {
             DELAY_TIME
         )
     }
+
 }

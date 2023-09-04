@@ -22,4 +22,9 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="_25sp">25sp</dimen>
+    <dimen name="_22sp">22sp</dimen>
+    <dimen name="_8dp">8dp</dimen>
+    <dimen name="_25dp">25dp</dimen>
+    <dimen name="_90dp">90dp</dimen>
+    <dimen name="_70dp">70dp</dimen>
 </resources>

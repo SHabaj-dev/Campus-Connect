@@ -20,7 +20,7 @@
     <string name="_91">+91</string>
     <string name="or">Or</string>
     <string name="login_with_google">Login with Google</string>
-    <string name="sign_up_with_google">Sign Up with Google</string>
+    <string name="sign_up_with_google">Sign in with Google</string>
     <string name="next">Next</string>
     <string name="verification_code_has_been_sent_on">Verification Code has been sent on</string>
     <string name="_91123456789">+91123456789</string>
@@ -28,4 +28,11 @@
     <string name="re_send">re-Send</string>
     <string name="verify">Verify</string>
     <string name="_00_00">00:00</string>
+    <string name="login_msg">Welcome! Please Login to continue</string>
+    <string name="sign_in_with_facebook">Sign in with Facebook</string>
+    <string name="sign_in_with_github">Sign In with Github</string>
+    <string name="default_sign_in_client_id">794211080951-9qcotvtrlsjcmdjjq7rc4u2co3okh02r.apps.googleusercontent.com</string>
+    <string name="hi">Hi,</string>
+    <string name="username">UserName</string>
+    <string name="wave_sign">👋</string>
 </resources>
