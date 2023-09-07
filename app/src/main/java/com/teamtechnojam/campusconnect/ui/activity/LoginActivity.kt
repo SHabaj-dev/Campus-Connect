@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.teamtechnojam.campusconnect.CompleteRegistrationActivity
 import com.teamtechnojam.campusconnect.R
 import com.teamtechnojam.campusconnect.databinding.ActivityLoginBinding
 
@@ -89,7 +90,7 @@ class LoginActivity : AppCompatActivity() {
                                     startActivity(
                                         Intent(
                                             this@LoginActivity,
-                                            MainActivity::class.java
+                                            CompleteRegistrationActivity::class.java
                                         ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                     )
                                     dialog.dismiss()

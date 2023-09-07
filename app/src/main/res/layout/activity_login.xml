@@ -9,10 +9,10 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_margin="@dimen/_20dp"
-        android:src="@drawable/learn"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_300dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/login_hi"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -35,4 +35,15 @@
     <string name="hi">Hi,</string>
     <string name="username">UserName</string>
     <string name="wave_sign">👋</string>
+    <string name="title_activity_complete_registration">CompleteRegistrationActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="previous">Previous</string>
+    <string name="full_name">Full Name</string>
+    <string name="country_code_and_phone_number">Country Code and Phone Number</string>
+    <string name="university_collage">University/Collage</string>
+    <string name="course">Course</string>
+    <string name="save">Save</string>
+    <string name="complete_your_registration">Complete your Registration</string>
 </resources>
