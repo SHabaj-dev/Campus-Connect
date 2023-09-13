@@ -11,8 +11,8 @@
     <string name="sign_up">Sign Up</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_chats">Chats</string>
+    <string name="title_profile">Profile</string>
     <string name="phone_number">Phone Number</string>
     <string name="new_password">New Password</string>
     <string name="confirm_password">Confirm Password</string>
@@ -46,4 +46,9 @@
     <string name="course">Course</string>
     <string name="save">Save</string>
     <string name="complete_your_registration">Complete your Registration</string>
+    <string name="error_msg">Something went wrong!! Please try Again</string>
+    <string name="complete_registration">Complete Registration</string>
+    <string name="your_skills_seperated_by">Your Skills separated by ,</string>
+    <string name="about_you">About You.</string>
+    <string name="_continue">Continue</string>
 </resources>

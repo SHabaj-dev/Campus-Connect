@@ -2,8 +2,6 @@ package com.teamtechnojam.campusconnect.ui.activity
 
 import android.app.Dialog
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -19,9 +17,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.teamtechnojam.campusconnect.CompleteRegistrationActivity
 import com.teamtechnojam.campusconnect.R
 import com.teamtechnojam.campusconnect.databinding.ActivityLoginBinding
+import com.teamtechnojam.campusconnect.ui.customUIComponents.LoadingDialog
 
 class LoginActivity : AppCompatActivity() {
 
@@ -39,10 +37,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         firebaseAuth = Firebase.auth
-        dialog = Dialog(this@LoginActivity)
-        dialog.setContentView(R.layout.loading_pop_up)
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setCancelable(false)
+        dialog = LoadingDialog.getLoadingDialog(this@LoginActivity)
 
         binding.flSignUpWithGoogle.setOnClickListener {
             dialog.show()
@@ -71,6 +66,7 @@ class LoginActivity : AppCompatActivity() {
         if (requestCode == 100) {
             val signInAccountTask: Task<GoogleSignInAccount> =
                 GoogleSignIn.getSignedInAccountFromIntent(data)
+
             if (signInAccountTask.isSuccessful) {
                 val s = "Google sign in successful"
                 showToastMessage(s)
@@ -87,6 +83,46 @@ class LoginActivity : AppCompatActivity() {
                             .addOnCompleteListener(this) { task ->
 
                                 if (task.isSuccessful) {
+                                    /*val databaseReference = FirebaseDatabase.getInstance().reference
+                                    databaseReference.child("Users")
+                                        .child(firebaseAuth.uid.toString())
+                                        .addListenerForSingleValueEvent(object :
+                                            ValueEventListener {
+                                            override fun onDataChange(snapshot: DataSnapshot) {
+                                                if (snapshot.exists()) {
+                                                    startActivity(
+                                                        Intent(
+                                                            this@LoginActivity,
+                                                            MainActivity::class.java
+                                                        ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                                    )
+                                                    dialog.dismiss()
+                                                    finish()
+                                                } else {
+                                                    startActivity(
+                                                        Intent(
+                                                            this@LoginActivity,
+                                                            CompleteRegistrationActivity::class.java
+                                                        ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                                    )
+                                                    dialog.dismiss()
+                                                    finish()
+                                                    Log.d(
+                                                        "FIREBASE_LOGIN",
+                                                        "Firebase authentication successful"
+                                                    )
+                                                }
+                                            }
+
+                                            override fun onCancelled(error: DatabaseError) {
+                                                Toast.makeText(
+                                                    this@LoginActivity,
+                                                    error.message,
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+
+                                        })*/
                                     startActivity(
                                         Intent(
                                             this@LoginActivity,
@@ -95,7 +131,10 @@ class LoginActivity : AppCompatActivity() {
                                     )
                                     dialog.dismiss()
                                     finish()
-                                    Log.d("FIREBASE_LOGIN", "Firebase authentication successful")
+                                    Log.d(
+                                        "FIREBASE_LOGIN",
+                                        "Firebase authentication successful"
+                                    )
                                 } else {
                                     Log.d(
                                         "FIREBASE_LOGIN",

@@ -1,132 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wave_background"
-    tools:context=".CompleteRegistrationActivity">
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_back"
-        android:layout_width="@dimen/_50dp"
-        android:layout_height="@dimen/_50dp"
-        android:layout_margin="@dimen/_10dp"
-        android:background="@color/transparent"
-        android:src="@drawable/arrow_back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_20dp"
-        android:gravity="center"
-        android:text="@string/complete_your_registration"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_25sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_back" />
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/iv_userProfilePic"
-        android:layout_width="@dimen/_150dp"
-        android:layout_height="@dimen/_150dp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/ic_launcher"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:shapeAppearanceOverlay="@style/CircleImageShape" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/blue"
+    android:gravity="center_horizontal"
+    tools:context=".ui.activity.CompleteRegistrationActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
+        android:id="@+id/ll_topBar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/_10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/et_fullName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20dp"
-            android:layout_marginTop="@dimen/_10dp"
-            android:layout_marginEnd="@dimen/_20dp"
-            android:autofillHints="name"
-            android:hint="@string/full_name"
-            android:inputType="text"
-            android:maxLength="30"
-            android:singleLine="true"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray"
-            android:textSize="@dimen/_18sp" />
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="@dimen/_50dp"
+            android:layout_height="@dimen/_50dp"
+            android:layout_marginStart="@dimen/_5dp"
+            android:background="@color/transparent"
+            android:src="@drawable/arrow_back" />
 
-        <EditText
-            android:id="@+id/et_phoneNumber"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20dp"
-            android:layout_marginTop="@dimen/_10dp"
-            android:layout_marginEnd="@dimen/_20dp"
-            android:autofillHints="name"
-            android:hint="@string/country_code_and_phone_number"
-            android:inputType="phone"
-            android:maxLength="13"
-            android:singleLine="true"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray"
-            android:textSize="@dimen/_18sp" />
-
-        <EditText
-            android:id="@+id/et_collageName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20dp"
-            android:layout_marginTop="@dimen/_10dp"
-            android:layout_marginEnd="@dimen/_20dp"
-            android:autofillHints="name"
-            android:hint="@string/university_collage"
-            android:inputType="text"
-            android:maxLength="30"
-            android:singleLine="true"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray"
-            android:textSize="@dimen/_18sp" />
-
-        <EditText
-            android:id="@+id/et_courseName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20dp"
-            android:layout_marginTop="@dimen/_10dp"
-            android:layout_marginEnd="@dimen/_20dp"
-            android:autofillHints="name"
-            android:hint="@string/course"
-            android:inputType="text"
-            android:maxLength="30"
-            android:singleLine="true"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray"
-            android:textSize="@dimen/_18sp" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_saveInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_20dp"
-            android:text="@string/save"
+            android:text="@string/complete_registration"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -135,5 +39,197 @@
 
     </LinearLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/ivUserProfilePic"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="-70dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/_70dp">
+
+            <EditText
+                android:id="@+id/etUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginEnd="@dimen/_20dp"
+                android:background="@drawable/edit_text_background"
+                android:cursorVisible="true"
+                android:hint="@string/username"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:paddingStart="@dimen/_10dp"
+                android:paddingTop="@dimen/_8dp"
+                android:paddingEnd="@dimen/_10dp"
+                android:paddingBottom="@dimen/_8dp"
+                android:singleLine="true"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textColorHint="@color/light_grey"
+                android:textCursorDrawable="@drawable/edite_text_cursor"
+                android:textSize="@dimen/_18sp"
+                android:textStyle="normal" />
+
+            <EditText
+                android:id="@+id/etPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginEnd="@dimen/_20dp"
+                android:background="@drawable/edit_text_background"
+                android:cursorVisible="true"
+                android:hint="@string/phone_number"
+                android:imeOptions="actionNext"
+                android:inputType="phone"
+                android:paddingStart="@dimen/_10dp"
+                android:paddingTop="@dimen/_8dp"
+                android:paddingEnd="@dimen/_10dp"
+                android:paddingBottom="@dimen/_8dp"
+                android:singleLine="true"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textColorHint="@color/light_grey"
+                android:textCursorDrawable="@drawable/edite_text_cursor"
+                android:textSize="@dimen/_18sp"
+                android:textStyle="normal" />
+
+            <EditText
+                android:id="@+id/etCollageName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginEnd="@dimen/_20dp"
+                android:background="@drawable/edit_text_background"
+                android:cursorVisible="true"
+                android:hint="@string/university_collage"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:paddingStart="@dimen/_10dp"
+                android:paddingTop="@dimen/_8dp"
+                android:paddingEnd="@dimen/_10dp"
+                android:paddingBottom="@dimen/_8dp"
+                android:singleLine="true"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textColorHint="@color/light_grey"
+                android:textCursorDrawable="@drawable/edite_text_cursor"
+                android:textSize="@dimen/_18sp"
+                android:textStyle="normal" />
+
+            <EditText
+                android:id="@+id/etCourse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginEnd="@dimen/_20dp"
+                android:background="@drawable/edit_text_background"
+                android:cursorVisible="true"
+                android:hint="@string/course"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:paddingStart="@dimen/_10dp"
+                android:paddingTop="@dimen/_8dp"
+                android:paddingEnd="@dimen/_10dp"
+                android:paddingBottom="@dimen/_8dp"
+                android:singleLine="true"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textColorHint="@color/light_grey"
+                android:textCursorDrawable="@drawable/edite_text_cursor"
+                android:textSize="@dimen/_18sp"
+                android:textStyle="normal" />
+
+            <EditText
+                android:id="@+id/etSkills"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginEnd="@dimen/_20dp"
+                android:background="@drawable/edit_text_background"
+                android:cursorVisible="true"
+                android:hint="@string/your_skills_seperated_by"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:paddingStart="@dimen/_10dp"
+                android:paddingTop="@dimen/_8dp"
+                android:paddingEnd="@dimen/_10dp"
+                android:paddingBottom="@dimen/_8dp"
+                android:singleLine="true"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textColorHint="@color/light_grey"
+                android:textCursorDrawable="@drawable/edite_text_cursor"
+                android:textSize="@dimen/_18sp"
+                android:textStyle="normal" />
+
+            <EditText
+                android:id="@+id/etAbout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginEnd="@dimen/_20dp"
+                android:background="@drawable/edit_text_background"
+                android:cursorVisible="true"
+                android:hint="@string/about_you"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLines="10"
+                android:paddingStart="@dimen/_10dp"
+                android:paddingTop="@dimen/_8dp"
+                android:paddingEnd="@dimen/_10dp"
+                android:paddingBottom="@dimen/_8dp"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textColorHint="@color/light_grey"
+                android:textCursorDrawable="@drawable/edite_text_cursor"
+                android:textSize="@dimen/_18sp"
+                android:textStyle="normal" />
+
+            <Button
+                android:id="@+id/btnSaveInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_30dp"
+                android:layout_marginEnd="@dimen/_20dp"
+                android:layout_marginBottom="@dimen/_30dp"
+                android:text="@string/_continue" />
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivUserProfilePic"
+        android:layout_width="@dimen/_150dp"
+        android:layout_height="@dimen/_150dp"
+        android:layout_below="@id/ll_topBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_50dp"
+        android:background="@color/light_grey"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_person"
+        app:shapeAppearanceOverlay="@style/CircleImageShape" />
+
+
+</RelativeLayout>

@@ -1,10 +1,10 @@
-package com.teamtechnojam.campusconnect.ui.fragments.notifications
+package com.teamtechnojam.campusconnect.ui.fragments.profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class NotificationsViewModel : ViewModel() {
+class ProfileViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is notifications Fragment"

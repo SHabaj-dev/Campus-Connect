@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/blue"
+    android:gravity="center_horizontal"
+    tools:context=".ui.activity.CompleteRegistrationActivity">
+
+    <LinearLayout
+        android:id="@+id/ll_topBar"
+        android:layout_width="0dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="@dimen/_50dp"
+            android:layout_height="@dimen/_50dp"
+            android:layout_marginStart="@dimen/_5dp"
+            android:background="@color/transparent"
+            android:src="@drawable/arrow_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:text="@string/complete_registration"
+            android:textSize="@dimen/_20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivUserProfilePic"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="-70dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_70dp">
+
+            <EditText
+                android:id="@+id/etUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginEnd="@dimen/_20dp"
+                android:background="@drawable/edit_text_background"
+                android:hint="@string/username"
+                android:inputType="text"
+                android:paddingStart="@dimen/_10dp"
+                android:paddingTop="@dimen/_8dp"
+                android:paddingEnd="@dimen/_10dp"
+                android:paddingBottom="@dimen/_8dp"
+                android:singleLine="true"
+                android:isCredential="true"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textColorHint="@color/light_grey"
+                android:textSize="@dimen/_18sp"
+                android:textStyle="normal" />
+        </ScrollView>
+
+
+    </LinearLayout>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivUserProfilePic"
+        android:layout_width="@dimen/_150dp"
+        android:layout_height="@dimen/_150dp"
+        android:layout_below="@id/ll_topBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_50dp"
+        android:background="@color/light_grey"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_person"
+        app:shapeAppearanceOverlay="@style/CircleImageShape" />
+
+
+</RelativeLayout>

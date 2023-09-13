@@ -1,4 +1,4 @@
-package com.teamtechnojam.campusconnect.ui.fragments.dashboard
+package com.teamtechnojam.campusconnect.ui.fragments.chats
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

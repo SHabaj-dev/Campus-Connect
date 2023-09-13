@@ -1,4 +1,4 @@
-package com.teamtechnojam.campusconnect
+package com.teamtechnojam.campusconnect.ui.activity
 
 import android.app.Activity
 import android.app.Dialog
@@ -25,8 +25,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.teamtechnojam.campusconnect.R
 import com.teamtechnojam.campusconnect.databinding.ActivityCompleteRegistractionBinding
-import com.teamtechnojam.campusconnect.ui.activity.MainActivity
 
 class CompleteRegistrationActivity : AppCompatActivity() {
 
@@ -34,6 +34,8 @@ class CompleteRegistrationActivity : AppCompatActivity() {
     private lateinit var phoneNumber: String
     private lateinit var collageName: String
     private lateinit var userName: String
+    private var about: String = ""
+    private var skills: String = ""
     private lateinit var binding: ActivityCompleteRegistractionBinding
     private lateinit var mAuth: FirebaseAuth
     private var imageUri: Uri? = null
@@ -56,18 +58,23 @@ class CompleteRegistrationActivity : AppCompatActivity() {
             showImageAttachMenu()
         }
 
-        binding.btnSaveInfo.setOnClickListener {
-            userName = binding.etFullName.text.toString()
-            collageName = binding.etCollageName.text.toString()
-            phoneNumber = binding.etPhoneNumber.text.toString()
-            courseName = binding.etCourseName.text.toString()
+        binding.btnSaveInfo?.setOnClickListener {
+            userName = binding.etUserName.text.toString()
+            collageName = binding.etCollageName?.text.toString()
+            phoneNumber = binding.etPhoneNumber?.text.toString()
+            courseName = binding.etCourse?.text.toString()
+            skills = binding.etSkills?.text.toString()
+            about = binding.etAbout?.text.toString()
+
 
             if (userName.isEmpty()) {
-                showToast("User Name can't be Empty")
+                showToast("User Name can't be Empty.")
             } else if (collageName.isEmpty()) {
-                showToast("Please enter your University/Collage")
+                showToast("Please enter your University/Collage.")
             } else if (phoneNumber.isEmpty() || phoneNumber.length < 13) {
-                showToast("Please check your phone Number")
+                showToast("Please check your phone Number.")
+            } else if (courseName.isEmpty()) {
+                showToast("Please enter Course Name.")
             } else {
                 saveDataToFireDatabase()
             }
@@ -80,23 +87,58 @@ class CompleteRegistrationActivity : AppCompatActivity() {
         val filePathAndName = "ProfileImages/" + mAuth.uid
 
         val storageRef = FirebaseStorage.getInstance().getReference(filePathAndName)
-        storageRef.putFile(imageUri!!)
-            .addOnSuccessListener { taskSnapshot ->
+        try {
+            if (imageUri != null) {
+                storageRef.putFile(imageUri!!)
+                    .addOnSuccessListener { taskSnapshot ->
 
-                val uriTask: Task<Uri> = taskSnapshot.storage.downloadUrl
-                while (!uriTask.isSuccessful);
-                val uploadedImageUrl = uriTask.result.toString()
+                        val uriTask: Task<Uri> = taskSnapshot.storage.downloadUrl
+                        while (!uriTask.isSuccessful);
+                        val uploadedImageUrl = uriTask.result.toString()
 
-                updateProfile(uploadedImageUrl)
+                        updateProfile(uploadedImageUrl)
 
-                Toast.makeText(this, " Uploaded Successfully.", Toast.LENGTH_SHORT)
-                    .show()
+                        Toast.makeText(this, " Uploaded Successfully.", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(
+                            this,
+                            "Uploading Failed Due to ${it.message}",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                        loadingDialog.dismiss()
+                    }
+            } else {
+                val packageName = packageName.toString()
+                val defaultImageUri =
+                    Uri.parse("android.resource://$packageName/${R.drawable.ic_person}")
+                storageRef.putFile(defaultImageUri!!)
+                    .addOnSuccessListener { taskSnapshot ->
+
+                        val uriTask: Task<Uri> = taskSnapshot.storage.downloadUrl
+                        while (!uriTask.isSuccessful);
+                        val uploadedImageUrl = uriTask.result.toString()
+
+                        updateProfile(uploadedImageUrl)
+
+                        Toast.makeText(this, " Uploaded Successfully.", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(
+                            this,
+                            "Uploading Failed Due to ${it.message}",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                        loadingDialog.dismiss()
+                    }
             }
-            .addOnFailureListener {
-                Toast.makeText(this, "Uploading Failed Due to ${it.message}", Toast.LENGTH_SHORT)
-                    .show()
-                loadingDialog.dismiss()
-            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun updateProfile(uploadedImageUri: String) {
@@ -106,6 +148,8 @@ class CompleteRegistrationActivity : AppCompatActivity() {
         hashMap["university"] = collageName
         hashMap["phoneNumber"] = phoneNumber
         hashMap["courseName"] = courseName
+        hashMap["about"] = about
+        hashMap["skills"] = skills
         if (imageUri != null) {
             hashMap["profileImage"] = uploadedImageUri
         }

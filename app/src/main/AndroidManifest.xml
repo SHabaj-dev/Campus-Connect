@@ -23,7 +23,7 @@
         android:theme="@style/MyCustomTheme"
         tools:targetApi="31">
         <activity
-            android:name=".CompleteRegistrationActivity"
+            android:name=".ui.activity.CompleteRegistrationActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.MainActivity"

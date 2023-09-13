@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -17,14 +19,13 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
+import com.teamtechnojam.campusconnect.R
 import com.teamtechnojam.campusconnect.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
     private lateinit var mAuth: FirebaseAuth
     private var currentUser: FirebaseUser? = null
@@ -38,10 +39,6 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val mAuth = Firebase.auth
         currentUser = mAuth.currentUser
-        circularProgressBar = CircularProgressDrawable(requireContext())
-        circularProgressBar.strokeWidth = 5f
-        circularProgressBar.centerRadius = 30f
-        circularProgressBar.start()
         return binding.root
 
     }
@@ -49,6 +46,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUserData()
+
+        binding.rvUsersList.layoutManager = LinearLayoutManager(requireContext())
 
 
     }
@@ -68,7 +67,8 @@ class HomeFragment : Fragment() {
                         Log.d("IMAGE_URL", "onDataChange: $photoUrl")
                         Glide.with(requireContext())
                             .load(photoUrl)
-                            .placeholder(circularProgressBar)
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .placeholder(requireContext().getDrawable(R.drawable.ic_person))
                             .into(binding.ivUserProfilePic)
                     }
 
@@ -84,8 +84,8 @@ class HomeFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
+    /*override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
+    }*/
 }
