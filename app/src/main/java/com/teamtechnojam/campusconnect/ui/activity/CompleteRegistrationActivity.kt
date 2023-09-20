@@ -142,7 +142,7 @@ class CompleteRegistrationActivity : AppCompatActivity() {
     }
 
     private fun updateProfile(uploadedImageUri: String) {
-
+        val currentUserId = mAuth.currentUser?.uid.toString()
         val hashMap: HashMap<String, Any> = HashMap()
         hashMap["userName"] = userName
         hashMap["university"] = collageName
@@ -150,6 +150,7 @@ class CompleteRegistrationActivity : AppCompatActivity() {
         hashMap["courseName"] = courseName
         hashMap["about"] = about
         hashMap["skills"] = skills
+        hashMap["uid"] = currentUserId
         if (imageUri != null) {
             hashMap["profileImage"] = uploadedImageUri
         }

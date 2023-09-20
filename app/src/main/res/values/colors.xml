@@ -8,4 +8,5 @@
     <color name="red">#F44336</color>
     <color name="light_grey">#767676</color>
     <color name="google_red">#F23C0F</color>
+    <color name="shimmer_gray">#DDDDDD</color>
 </resources>

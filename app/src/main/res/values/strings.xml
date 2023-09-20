@@ -51,4 +51,12 @@
     <string name="your_skills_seperated_by">Your Skills separated by ,</string>
     <string name="about_you">About You.</string>
     <string name="_continue">Continue</string>
+    <string name="add_certification">Add Certification</string>
+    <string name="add_project">Add Project</string>
+    <string name="certificate_id">Credential Id</string>
+    <string name="issuing_organization">Issuing organization</string>
+    <string name="issue_date">Issue Date</string>
+    <string name="expiration_date">Expiration Date</string>
+    <string name="add">Add</string>
+    <string name="something_went_wrong_please_try_again">Something Went wrong Please try Again!!</string>
 </resources>

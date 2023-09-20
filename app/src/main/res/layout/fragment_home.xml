@@ -7,82 +7,106 @@
     android:background="@color/transparent"
     tools:context=".ui.fragments.home.HomeFragment">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainHomeView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20dp"
-        android:layout_marginTop="@dimen/_10dp"
-        android:layout_marginEnd="@dimen/_20dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/iv_userProfilePic"
-            android:layout_width="@dimen/_50dp"
-            android:layout_height="@dimen/_50dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:scaleType="fitXY"
-            android:background="@color/light_grey"
-            android:src="@drawable/ic_person"
-            app:shapeAppearanceOverlay="@style/CircleImageShape" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/relativeLayouts"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/iv_userProfilePic"
-            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/_20dp"
             android:layout_marginTop="@dimen/_10dp"
-            android:orientation="horizontal">
+            android:layout_marginEnd="@dimen/_20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_userProfilePic"
+                android:layout_width="@dimen/_50dp"
+                android:layout_height="@dimen/_50dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/light_grey"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_person"
+                app:shapeAppearanceOverlay="@style/CircleImageShape" />
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hi"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_18sp"
-                android:textStyle="bold" />
+                android:layout_below="@id/iv_userProfilePic"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="@dimen/_10dp"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_userName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/username"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_18sp"
-                android:textStyle="italic|bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hi"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_18sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/wave_sign"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_20sp" />
+                <TextView
+                    android:id="@+id/tv_userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/username"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_18sp"
+                    android:textStyle="italic|bold" />
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wave_sign"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_20sp" />
+
+            </LinearLayout>
 
 
-    </RelativeLayout>
+        </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_usersList"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20dp"
-        android:layout_marginTop="@dimen/_10dp"
-        android:layout_marginEnd="@dimen/_20dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_usersList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:layout_marginEnd="@dimen/_20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayouts"
+            tools:listitem="@layout/home_feed_list_item" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/simmerHome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:listitem="@layout/home_feed_list_item"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:shimmer_direction="top_to_bottom">
+
+        <include layout="@layout/home_simmer_effect" />
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

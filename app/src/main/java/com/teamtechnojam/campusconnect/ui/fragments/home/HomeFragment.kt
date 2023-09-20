@@ -20,7 +20,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.teamtechnojam.campusconnect.R
+import com.teamtechnojam.campusconnect.adapter.UserProfileListAdapter
 import com.teamtechnojam.campusconnect.databinding.FragmentHomeBinding
+import com.teamtechnojam.campusconnect.model.ProfileUserModel
 
 class HomeFragment : Fragment() {
 
@@ -39,16 +41,41 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val mAuth = Firebase.auth
         currentUser = mAuth.currentUser
+        setUserData()
+        getUserProfilesList()
+
+        binding.rvUsersList.layoutManager = LinearLayoutManager(requireContext())
         return binding.root
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setUserData()
+    private fun getUserProfilesList() {
+        val fireDataBaseReference = FirebaseDatabase.getInstance().reference
+        fireDataBaseReference.child("Users").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val usersList = ArrayList<ProfileUserModel>()
 
-        binding.rvUsersList.layoutManager = LinearLayoutManager(requireContext())
+                    for (users in snapshot.children) {
+                        val user = users.getValue(ProfileUserModel::class.java)
+                        if (user != null && user.uid != currentUser?.uid) {
+                            usersList.add(user)
+                        }
+                    }
+                    val userListAdapter = UserProfileListAdapter(requireContext(), usersList)
+                    binding.rvUsersList.adapter = userListAdapter
+                    userListAdapter.notifyDataSetChanged()
+                    binding.mainHomeView.visibility = View.VISIBLE
+                    binding.simmerHome.visibility = View.GONE
+                }
 
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
+            }
+
+        })
 
     }
 

@@ -8,6 +8,7 @@ data class ProfileUserModel(
     val profileImage: String?,
     val skills: String?,
     val university: String?,
+    val uid: String?
 ) {
-    constructor() : this(null, null, null, null, null, null, null)
+    constructor() : this(null, null, null, null, null, null, null, null)
 }

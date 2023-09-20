@@ -38,7 +38,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/ll_university"
+            android:id="@+id/sl_university"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8dp"
@@ -64,14 +64,14 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_degree"
+            android:id="@+id/sl_linearLayout1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8dp"
             android:gravity="center"
             android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@id/ll_university"
-            app:layout_constraintTop_toBottomOf="@id/ll_university">
+            app:layout_constraintStart_toStartOf="@id/sl_university"
+            app:layout_constraintTop_toBottomOf="@id/sl_university">
 
             <ImageView
                 android:layout_width="@dimen/_30dp"
@@ -96,8 +96,8 @@
             android:layout_marginTop="@dimen/_8dp"
             android:gravity="center"
             android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@id/ll_degree"
-            app:layout_constraintTop_toBottomOf="@id/ll_degree">
+            app:layout_constraintStart_toStartOf="@id/sl_linearLayout1"
+            app:layout_constraintTop_toBottomOf="@id/sl_linearLayout1">
 
             <ImageView
                 android:layout_width="@dimen/_30dp"
@@ -116,7 +116,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_skillHeading"
+            android:id="@+id/skillHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20dp"
@@ -137,7 +137,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_skillHeading"
+            app:layout_constraintTop_toBottomOf="@+id/skillHeading"
             app:spanCount="1"
             tools:listitem="@layout/skills_list_item" />
 
@@ -235,10 +235,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_profilePicList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/light_grey"
             android:src="@drawable/ic_person"
+            android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

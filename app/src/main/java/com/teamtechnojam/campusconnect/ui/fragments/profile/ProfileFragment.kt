@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
@@ -18,8 +19,8 @@ import com.google.firebase.ktx.Firebase
 import com.teamtechnojam.campusconnect.R
 import com.teamtechnojam.campusconnect.databinding.FragmentProfileBinding
 import com.teamtechnojam.campusconnect.model.ProfileUserModel
+import com.teamtechnojam.campusconnect.ui.activity.EditProfileActivity
 import com.teamtechnojam.campusconnect.ui.activity.LoginActivity
-import com.teamtechnojam.campusconnect.ui.customUIComponents.LoadingDialog
 
 class ProfileFragment : Fragment() {
 
@@ -28,6 +29,7 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var profileUserData: ProfileUserModel
+    private lateinit var shimmerEffect: ShimmerFrameLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,8 +41,7 @@ class ProfileFragment : Fragment() {
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         firebaseAuth = Firebase.auth
-        loadingDialog = LoadingDialog.getLoadingDialog(requireContext())
-        loadingDialog.show()
+        binding.shimmerEffect.startShimmer()
         getCurrentUserFromFirebase()
         return binding.root
     }
@@ -63,8 +64,10 @@ class ProfileFragment : Fragment() {
                     .load(profileUserData.profileImage.toString())
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .placeholder(requireContext().getDrawable(R.drawable.ic_person))
-                    .into(binding.ivUserProfilePic)
-                loadingDialog.dismiss()
+                    .into(binding.ivUserProfilePicProfile)
+                binding.shimmerEffect.visibility = View.GONE
+                binding.constraintLayoutView.visibility = View.VISIBLE
+                binding.shimmerEffect.stopShimmer()
             }
         }
             .addOnFailureListener {
@@ -92,6 +95,10 @@ class ProfileFragment : Fragment() {
 
         binding.btnBack.setOnClickListener {
             activity?.onBackPressedDispatcher?.onBackPressed()
+        }
+
+        binding.ivEditUser.setOnClickListener {
+            startActivity(Intent(requireContext(), EditProfileActivity::class.java))
         }
 
     }
